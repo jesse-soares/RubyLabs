@@ -1,11 +1,14 @@
-puts "Hello World"
+puts "Hello World"   
 puts 'Hello World'   # mais eficiente
+
+cor = 'azul'
+puts "Minha cor preferida é #{cor}"  # aspa dupla permite a interpolação de variáveis
 
 puts 'I like' + 'Ruby' # concatenar
 puts 'It\'s my Ruby'   # '\' para escapar caracteres
 puts 'Hello ' * 3      # escreve 3 vezes
 
-PI = 3.1416            # contante. Basta colocar o nome da variável em maiúsculo.
+PI = 3.1416            # contante. Basta colocar a primeira letra do nome da variável em maiúsculo.
 puts PI
 
 PI = 'hi'              # alterar o valor de uma constante gera um warning mas é permitido. =/
