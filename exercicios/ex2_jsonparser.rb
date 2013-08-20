@@ -5,10 +5,10 @@ Criar um método que receba um objeto em ruby e retorne seu valor em 1 string no
 Ex.: 
 
 ENTRADA
-obj = new Object
-obj.nome = "Joao"
-obj.idade = 80
-obj.filhos = [ "Maria", "Pedro" ]
+pessoa = Pessoa
+pessoa.nome = "Joao"
+pessoa.idade = 80
+pessoa.filhos = [ "Maria", "Pedro" ]
 
 SAIDA
 {
