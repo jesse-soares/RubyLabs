@@ -49,11 +49,41 @@ def parse_json obj
 		return '[ ' + obj.join(', ') + ' ]'
 	end
 
-	#obj.instance_variables
-	#obj.instance_variable_get :@nome
+	variables = obj.instance_variables.map{ |x| parse_object_instance_variable obj, x }
 
-	return "{}"
+	return '{ ' + variables.join(', ') + ' }'
 
 end
 
-puts parse_json [ 2, 3, "Oxi", Pessoa.new ]
+
+def parse_object_instance_variable obj, instance_variable
+
+	return '' if !obj || !instance_variable
+
+	var_name = instance_variable.to_s
+	var_name = var_name[1, var_name.size] # remover first char '@'
+	var_name = '"' + var_name + '"'
+
+	var_value = parse_json obj.instance_variable_get instance_variable
+
+	return var_name + ': ' + var_value
+
+end
+
+
+
+filho1 = Pessoa.new
+filho1.nome = "Maria"
+filho1.idade = 40
+
+filho2 = Pessoa.new
+filho2.nome = "Jose"
+filho2.idade = 38
+
+pessoa = Pessoa.new
+pessoa.nome = "Joao"
+pessoa.idade = 80
+pessoa.filhos = [filho1, filho2]
+
+
+puts parse_json [ 2, 3, "Oxi", pessoa ]
