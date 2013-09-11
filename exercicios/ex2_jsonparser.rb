@@ -26,6 +26,7 @@ class Pessoa
 
 	attr_accessor :nome
 	attr_accessor :idade
+	attr_accessor :aposentado
 	attr_accessor :filhos
 
 end
@@ -61,8 +62,7 @@ def parse_object_instance_variable obj, instance_variable
 	return '' if !obj || !instance_variable
 
 	var_name = instance_variable.to_s
-	var_name = var_name[1, var_name.size] # remover first char '@'
-	var_name = '"' + var_name + '"'
+	var_name = '"' + var_name[1, var_name.size] + '"' # remover first char '@'
 
 	var_value = parse_json obj.instance_variable_get instance_variable
 
@@ -83,7 +83,8 @@ filho2.idade = 38
 pessoa = Pessoa.new
 pessoa.nome = "Joao"
 pessoa.idade = 80
+pessoa.aposentado = true
 pessoa.filhos = [filho1, filho2]
 
 
-puts parse_json [ 2, 3, "Oxi", pessoa ]
+puts parse_json [1, 2, "Oxi", pessoa]
