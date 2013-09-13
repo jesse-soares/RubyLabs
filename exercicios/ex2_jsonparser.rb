@@ -32,43 +32,59 @@ class Pessoa
 end
 
 
+# definicao da funcao na classe Object
+class Object
 
-def parse_json obj
+	def to_json
 
-	is_primitive = ( (obj.is_a? Numeric) ||
-		 			(obj.is_a? TrueClass) ||
-		 			(obj.is_a? FalseClass) )
+		is_primitive = ( (self.is_a? Numeric) ||
+			 			(self.is_a? TrueClass) ||
+			 			(self.is_a? FalseClass) )
 
-	return obj.to_s if is_primitive
+		return self.to_s if is_primitive
 
-	return '"' + obj + '"' if (obj.is_a? String)
+		return 'null' if (self.is_a? NilClass)
 
-	if (obj.is_a? Array)
+		return '"' + self + '"' if (self.is_a? String)
 
-		obj.map!{ |x| parse_json x }
+		return parse_array_to_json if (self.is_a? Array)
 
-		return '[ ' + obj.join(', ') + ' ]'
+		parse_object_to_json
 	end
 
-	variables = obj.instance_variables.map{ |x| parse_object_instance_variable obj, x }
+	private
 
-	return '{ ' + variables.join(', ') + ' }'
+	def parse_array_to_json
+		
+		json_arr = self.map{
+			|x| x.to_json
+		}
+
+		return '[ ' + json_arr.join(', ') + ' ]'
+	end
+
+	def parse_object_to_json
+
+		variables = self.instance_variables.map{
+			|x| parse_object_instance_variable_to_json x
+		}
+
+		return '{ ' + variables.join(', ') + ' }'
+	end
+
+	def parse_object_instance_variable_to_json instance_variable
+
+		var_name = instance_variable.to_s
+		var_name = '"' + var_name[1, var_name.size] + '"' # remover first char '@'
+
+		var_value = (self.instance_variable_get instance_variable).to_json
+
+		return var_name + ': ' + var_value
+	end
 
 end
 
 
-def parse_object_instance_variable obj, instance_variable
-
-	return '' if !obj || !instance_variable
-
-	var_name = instance_variable.to_s
-	var_name = '"' + var_name[1, var_name.size] + '"' # remover first char '@'
-
-	var_value = parse_json obj.instance_variable_get instance_variable
-
-	return var_name + ': ' + var_value
-
-end
 
 
 
@@ -87,4 +103,9 @@ pessoa.aposentado = true
 pessoa.filhos = [filho1, filho2]
 
 
-puts parse_json [1, 2, "Oxi", pessoa]
+puts "Fino!!".to_json
+puts pessoa.to_json
+puts
+arr = [1, 2, nil, "Oxi", pessoa]
+puts arr.to_json
+puts arr.to_s
