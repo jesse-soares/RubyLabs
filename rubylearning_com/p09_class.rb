@@ -28,6 +28,56 @@ puts d.display
 
 d.aeeta
 
+
+# ACCESSORS (getters e setters)
+
+puts d.name							# nao é possivel acessar diretamente uma variavel de instancia
+
+class Dog							# adicionando comportamento na classe 'Dog'
+
+	attr_accessor :age				# cria a variavel '@age', e os metodos accessors 'age' (getter) e 'age=' (setter)
+
+	def name 						# criando attr_reader (getter)
+		@name
+	end
+
+	def name= name 					# criando attr_writer (setter; sufixo '=')
+		@name = name
+	end
+
+	def voice
+		puts "Au Au"
+		uivo
+	end
+
+	def Dog.create_default					# metodo de classe (static)
+
+		dog = new 'Vira-lata', 'Rex'		# contrutor é um metodo que pertence a classe
+		dog.age = 1
+
+		dog
+	end
+
+	private									# a partir daqui tudo é privado. Métodos privados são acessiveis de subclasses!
+
+	def uivo
+		puts 'Auuuuuuuuu'
+	end
+
+end
+
+puts d.name
+
+d.age = 5
+d.name = 'Raika'
+puts d.name + d.age.to_s
+
+d1 = Dog.create_default
+puts d1.name
+d1.voice
+d1.uivo										# metodo privado
+
+
 =begin NOTES
 
 - É melhor usar :respond_to? ao inves de :instance_of? pois é melhor verificar um comportamento desejado do que o tipo

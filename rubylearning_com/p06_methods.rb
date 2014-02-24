@@ -45,23 +45,23 @@ puts hello
 
 # VAR-ARG metodo com numero variavel de argumentos
 
-def varArgTest *variables
+def var_arg_test *variables
 	puts variables.class
 	variables.inspect
 end
 
-puts varArgTest 'hello', 'world' # nao ha limites de qntde de argumentos a serem chamados
-puts varArgTest()
+puts var_arg_test 'hello', 'world' # nao ha limites de qntde de argumentos a serem chamados
+puts var_arg_test()
 
 
-def varArgTest2 var1, *variables, var2, var3     # o var-arg pode estar presente em qualquer ordem na lista de argumentos
+def var_arg_test_2 var1, *variables, var2, var3     # o var-arg pode estar presente em qualquer ordem na lista de argumentos
 	variables.inspect
 end
 
-#puts varArgTest2 'a', 'b'             			# erro pois o metodo precis de pelo menos 3 argumentos
-puts varArgTest2 'a', 'b', 'c'
-puts varArgTest2 'a', 'b', 'c', 'd', 'e'
-puts varArgTest2 'a', 'b', 'c', 'd', 'e', 'f'
+#puts var_arg_test_2 'a', 'b'             			# erro pois o metodo precis de pelo menos 3 argumentos
+puts var_arg_test_2 'a', 'b', 'c'
+puts var_arg_test_2 'a', 'b', 'c', 'd', 'e'
+puts var_arg_test_2 'a', 'b', 'c', 'd', 'e', 'f'
 
 
 # BANG (!) METHODS metodo que altera o valor do proprio objeto. Se nao for bang, ele faz alteracao e a retorna em um novo objeto
@@ -74,7 +74,7 @@ puts minha_var
 puts minha_var.downcase!
 puts minha_var
 
-# metodos terminados com (?): por convensao sao metodos que respondem a uma pergunta, geralmente retornam true ou false.
+# QUERY METHODS (?) metodos terminados com (?): por convensao sao metodos que respondem a uma pergunta, geralmente retornam true ou false.
 
 ## !! Não é possível passar métodos como argumentos para outros métodos, nem retornar métodos!!
 #     Porém é possível passar 'procs' e retornar 'procs' (ver p10.rb)

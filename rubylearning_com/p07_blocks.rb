@@ -10,7 +10,7 @@
 =end
 
 
-def customMethod s1, s2
+def custom_method s1, s2
 
 	puts 'Hi ' + s1
 
@@ -22,9 +22,9 @@ def customMethod s1, s2
 	puts 'Bye ' + s2
 end
 
-customMethod('Django', 'bla') { puts 'bla' }   # definicao de bloco sem argumentos
-customMethod('Maria', 'everybody') { |who| puts 'hello ' + who.to_s } # ao definir um bloco desse forma é necessario colocar () na chamada do metodo
-customMethod 'Josep', 'bye'
+custom_method('Django', 'bla') { puts 'bla' }   # definicao de bloco sem argumentos
+custom_method('Maria', 'everybody') { |who| puts 'hello ' + who.to_s } # ao definir um bloco desse forma é necessario colocar () na chamada do metodo
+custom_method 'Josep', 'bye'
 
 
 

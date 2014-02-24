@@ -27,7 +27,7 @@ hash = { 'name' => 'Jesse', 'age' => '20' }
 puts hash
 
 hash2 = { :name => 'Aline', :age => '15' }   # usando simbolos como chave dos hashes
-puts hash2
 
+hash2.each { |key, value| puts "'#{key}' é igual a '#{value}'" }
 
 #NOTE - Symbols: sao identificadores de variaveis, metodos, etc e que ao serem declarados referenciam o mesmo objeto durante toda a execucao do ruby

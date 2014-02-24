@@ -1,17 +1,24 @@
 =begin NOTES
 
 - Blocks não são objetos, mas podem ser convertidos em objetos da classe 'Proc'.
-  Isso é feito chamando o método 'lambda' da classe Object passando o bloco desejado
+  Isso pode ser feito de 3 formas:
+  	- chamando os métodos 'proc' ou 'lambda' da classe Object passando o bloco desejado
+  	- chamando 'Proc.new' passando o bloco desejado
+  	- usando '&' para fazer a conversão explícita
 
 - Um objeto da classe 'Proc' funciona de forma similar a de um método. É executado através do método 'call' que pode ou não ter argumentos.
 
 - Não é possível passar métodos como argumentos para outros métodos, nem retornar métodos!!
   Porém é possível passar 'Procs' e retornar 'Procs'
 
+- A diferença em criar Proc usando 'proc' e 'lambda' é que usando lambda os argumentos do bloco devem ser sempre informados.
+  Usando proc não é preciso informar os argumentos do bloco se eles não forem utilizados.
+
 =end
 
 pr = lambda { |x| puts "Hello #{x}!!" }				# uso do metodo 'lamba' para converter o bloco em um Proc (pr)
 pr2 = Proc.new { |y| puts "Aooooooooo #{y}!!" }		# lambda == Proc.new
+pr3 = proc { |z| puts "Eita #{z}" }
 
 def test_proc proc
 	puts 'Teste!!'
@@ -20,6 +27,7 @@ end
 
 test_proc pr
 test_proc pr2
+test_proc pr3
 
 
 # Inserindo comportamento na classe Array
