@@ -5,7 +5,7 @@ puts ('World!')
 puts ('...');
 
 if (0)
-  puts 0
+  puts 0     		# o metodo 'puts' imprime o valor retornado pelo metodo 'to_s' do objeto
 end
 
 if (nil)
@@ -17,6 +17,8 @@ if (false)
 end
 
 puts ''.methods     # lista todos os métodos da classe String
+
+puts Float.ancestors  # lista toda a arvore de heranca da classe
 
 ### NOTES
 
