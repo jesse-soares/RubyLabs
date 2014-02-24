@@ -1,0 +1,22 @@
+Capítulo 1: Introdução
+
+• “Convention over configuration”, ou convenção à configuração: ao invés de
+configurar um conjunto de arquivos XML, por exemplo, adota-se a convenção
+e apenas muda-se o que for necessário;
+• “Dont Repeat Yourself ”, ou “não se repita": nunca você deve fazer mais de uma
+vez o que for necessário (como checar uma regra de negócio);
+• Automação de tarefas repetidas: nenhum programador deve perder tempo em
+tarefas repetitivas e sim investir seu tempo em resolver problemas interessan-
+tes.
+
+Capítulo 2: Conhecendo Ruby
+
+• Ruby é uma linguagem de programação interpretada multiparadigma;
+• Tipagem dinâmica e forte, com gerenciamento de memória automático;
+• Originalmente planejada e desenvolvida no Japão em 1995, por Yukihiro "Matz" Matsumoto, para ser
+usada como linguagem de script. Matz queria uma linguagem de script que fosse
+mais poderosa do que Perl, e mais orientada a objetos do que Python;
+• Ruby suporta programação funcional, orientada a objetos, imperativa e reﬂexiva;
+• Ruby também é uma linguagem orientada a objetos, tudo é objeto;
+
+
