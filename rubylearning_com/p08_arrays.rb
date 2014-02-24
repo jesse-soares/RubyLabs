@@ -13,3 +13,21 @@ puts i0
 puts i1
 
 
+# RANGES
+
+r = (1..10)
+puts r.include? 5
+puts r.max
+puts r.to_a.to_s				# conversao de ranga para array
+
+
+# HASHES (map) - sao arrays onde os indices podem ser objetos de qualquer tipo. Em arrays os indices sao apenas inteiros
+
+hash = { 'name' => 'Jesse', 'age' => '20' }
+puts hash
+
+hash2 = { :name => 'Aline', :age => '15' }   # usando simbolos como chave dos hashes
+puts hash2
+
+
+#NOTE - Symbols: sao identificadores de variaveis, metodos, etc e que ao serem declarados referenciam o mesmo objeto durante toda a execucao do ruby

@@ -27,6 +27,18 @@ customMethod('Maria', 'everybody') { |who| puts 'hello ' + who.to_s } # ao defin
 customMethod 'Josep', 'bye'
 
 
+
+# CLOSURES - escopo
+
+list = ['a', 'b']
+i = 'ihaa'
+
+[1, 2, 3, 4].each { |i| list << i * 2 }			# o bloco carrega o escopo no qual foi declarado (list), mas tambem tem seu proprio escopo (i)
+
+puts list.to_s
+puts i
+
+
 x = 10
 5.times { |x| puts "x inside the block #{x}" }		# o escopo das variaveis do bloco é local
 
@@ -46,3 +58,42 @@ x = 10
 end
 
 puts "x outside the block #{x}"
+
+
+
+## CRIANDO METODOS QUE RECEBEM BLOCKS
+
+## Adicionando comportamento na classe Array
+class Array
+
+	def pares
+
+		i = 0
+
+		while i < self.size
+
+			yield(self[i]) if self[i] % 2 == 0			# executa o bloco passado junto com o metodo 'pares'
+			i += 1
+		end
+
+	end
+
+	def impares &bloco 									# explicita que o metodo precisa receber um bloco como argumento
+														# o '&' converte explicitamente o bloco em um 'Proc' para assim poder ser executado (ver p10.rb)
+		i = 0
+
+		while i < self.size
+
+			bloco.call(self[i]) if self[i] % 2 == 1 	# chama o metodo 'call' da classe 'Proc' (ver p10.rb)
+			i += 1
+		end
+
+	end
+
+end
+
+arr = [0,1,2,3,4,5,6,7,8,9,10]
+
+arr.pares { |x| puts x }
+arr.impares { |x| puts x }
+

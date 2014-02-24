@@ -75,3 +75,6 @@ puts minha_var.downcase!
 puts minha_var
 
 # metodos terminados com (?): por convensao sao metodos que respondem a uma pergunta, geralmente retornam true ou false.
+
+## !! Não é possível passar métodos como argumentos para outros métodos, nem retornar métodos!!
+#     Porém é possível passar 'procs' e retornar 'procs' (ver p10.rb)
