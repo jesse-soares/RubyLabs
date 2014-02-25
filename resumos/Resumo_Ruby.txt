@@ -19,4 +19,225 @@ mais poderosa do que Perl, e mais orientada a objetos do que Python;
 • Ruby suporta programação funcional, orientada a objetos, imperativa e reﬂexiva;
 • Ruby também é uma linguagem orientada a objetos, tudo é objeto;
 
+• Query methods são métodos terminados em ?. Eles essencialmente só de-
+vem ser usados quando queremos saber se o resultado é verdadeiro ou falso;
+• Strings: como tudo em Ruby é um objeto, é possível chamar métodos diretamente à notação literal.
+O interessante também é que Strings reagem à multiplicação
+• É possível também acumular strings usando <<;
+• Outro fato importante de strings é a interpolação, ou a combinação de código
+para a composição de strings;
+• Strings, no final das contas, são cadeias de caracteres, como se fossem Arrays;
+• A forma padrão de representar números reais em binários, usada não só por Ruby, mas também
+por C, Java e JavaScript. Porém, este padrão possui um problema perigoso
+de arredondamento:
+0.0004 - 0.0003 == 0.0001 #=> false
+Este é um problema sério, pois muitas pessoas não conhecem ou não sabem
+deste problema e usam floats para valores financeiros, o que é errado. Para
+isso, usa-se a classe BigDecimal;
+• Constantes em Ruby são todas as variáveis que começam com uma letra maiús-
+cula, independente do restante. Porém, a comunidade Ruby adota um padrão de nomenclatura (MAIUSCULAS);
+• Arrays em Ruby possuem representação literal, parecido com Python e Perl e também podem conter 
+qualquer tipo de objetos. O comportamento de Arrays é bem parecido com strings, ou seja, é possível usar
+Ranges e o método [] para acessar elementos diretamente;
+• Arrays também fazem operações matemáticas:
+Além dessas operações mais canônicas, Arrays ainda suportam interseção e união de conjuntos:
+a = [1, 2, 3]
+b = [3, 4, 5]
+
+a + b # [1, 2, 3, 3, 4, 5]
+a | b # [1, 2, 3, 4, 5] - Na união, elementos duplicados são removidos
+a & b # [3] - Na interseção, apenas os repetidos ficam;
+
+• Métodos bang (!)
+Em Ruby, é possível criar métodos que terminam em ! e são usados em
+principalmente dois casos:
+1) Métodos que modificam estado interno do objeto, como vimos no exem-
+plo anterior;
+2) Métodos que, ao falharem, disparam uma exceção.
+
+• Hashes: Ruby também possui representação literal para Hashes, tal como Python (apesar
+de serem conhecidos naquelas terras por dicts ou dicionários). Hashes são estrutu-
+ras de dados similares a Array, porém ao invés de acessarmos valores com índices
+numéricos, podemos usar qualquer objeto:
+
+frequency = { "hello" => 1, "world" => 2 }
+frequency.keys # ["hello", "world"]
+frequency.values # [1, 2]
+frenquency.has_key?("hello") # true
+frequency.has_value?(3) # false;
+
+• Símbolos: são strings especiais. Símbolos são usados internamente pelo inter-
+pretador MRI para localizar o método a ser executado em um objeto, portanto sua
+implementação é tal que a torna imutável e única na instância do interpretador Ruby.
+Ou seja, uma vez um símbolo mencionado e criado, ele vai existir por todo o período
+de vida de execução do interpretador e nunca vai ser coletado pelo garbage collector: 
+
+Também acontece para chaves de Hash, com uma pequena diferença:
+
+• Símbolos devem ser usados quando nos tratamos de metadado e não dado em
+si. O que isso quer dizer? Usamos símbolos quando estamos descrevendo o
+tipo do dado e não dando um valor possível;
+• Strings devem ser usadas quando a chave é um valor e não um descritor de
+dados.
+
+Exemplificando as duas regras:
+
+# Exemplo 1 - usando símbolos
+{
+	:name => 'Fulano',
+	:email => 'fulano@example.com'
+}
+
+# Exemplo 2 - usando ambos
+{
+	:people => {
+		'Fulano' => {
+			:email => 'fulano@example.com'
+		}
+	}
+};
+
+• A recomendação é sempre usar o operador && e || e parênteses para deixar o código mais claro, ou ainda me-
+lhor, fazer a associação fora do if;
+
+• Não é preciso temperar o case com “breaks”, pois o Ruby não é cascade;
+
+• Notação para blocos
+Como você pôde perceber, foram usadas duas notações distintas nos exemplos anteriores, a notação com 
+do ... end e a notação com chaves. Ambas funcionam da mesma maneira. Porém, a comunidade Ruby adotou a
+seguinte regra:
+	• Para blocos curtos, de apenas uma linha, adota-se as chaves;
+	• Para blocos longos, de duas ou mais linhas, adota-se o do ... end;
+
+
+• Escopo de variáveis:
+
+	• Variáveis declaradas no mesmo escopo em que o bloco se encontra são acessíveis
+	de dentro deste bloco;
+
+	• Se usarmos um nome de variável para o parâmetro de bloco que é o mesmo que
+	uma variável externa ao bloco, a variável externa deixará de ser acessível dentro do
+	bloco, mas terá seu valor mantido;
+
+• Existem situações em que nós não ligamos para um dos valores passados para
+o bloco, mas ainda assim precisamos respeitar o número de parâmetros. Podemos
+assim usar o _, que irá “absorver” esse parâmetro sem ter a necessidade de ter que
+declarar uma nova variável:
+	a = {:a => 1, :b => 2, :c => 3}
+	a.each do |_, value|
+	puts value
+	end # 1; 2; 3
+
+•	Algumas vezes é possível simplesmente omitir, porém existem métodos cujo compor-
+tamento muda de acordo com o número de parâmetros passados (conhecido como
+arity). Isso acontece porque é possível verificar quantos parâmetros o bloco pode
+receber:
+
+	a = {:a => 1, :b => 2, :c => 3}
+	a.each do |key|
+	puts key
+	end
+	# a
+	# 1
+	# b
+	# 2
+	# c
+	# 3
+
+• Controle de fluxo em blocos
+	• break - Pára o iterador completamente no momento em que for chamado;
+	• next - Passa para o próximo elemento;
+
+• Retorno de métodos e funções
+	• Diferente da maioria das linguagens, em Ruby não é necessário colocar um
+return para retornar um valor, porque o último código executado de um método
+será o objeto retornado;
+
+• O return de fato não tem nenhum comportamento especial com blocos, ou seja, 
+o return termina a execução do método/função a qual o bloco está associado;
+
+• É possível criar múltiplos nomes para uma função via a expressão alias:
+	
+	def factorial(n)
+		return 1 if n == 1
+		n * factorial(n-1)
+	end
+	
+	alias fac factorial
+	
+	fac(5) # 120
+
+• Números de argumentos variáveis
+	• Em Ruby podemos criar métodos que aceitam um número variado de argumen-
+tos. Conseguimos isso através do uso do operador splat(*);
+
+
+• Hashes para parâmetros nomeados
+	• Resumindo, os principais usos para hashes como parâmetros são:
+		• Independência de ordem de parâmetros, reduzindo acoplamento por posição;
+		• Quando há muitos parâmetros;
+		• Quando há parâmetros opcionais;
+		• Quando é possível alterar o comportamento através de opções;
+
+• Blocos associados a métodos
+	• O yield passa o fluxo de execução do programa para o bloco associado ao mé-
+todo ou função. Usamos o block_given? para verificar se algum bloco foi passado
+de fato ao método;
+
+• Procs e Lambdas:
+	• Primeiro, vimos anteriormente que variáveis em excesso não causam nenhum
+	problema com blocos e são simplesmente ignorados, e isso acontece com procs, mas
+	não com lambdas;
+	• A segunda diferença é no uso do return. Dentro de blocos, quando usamos
+	return, o que de fato é retornado é o método associado, já que blocos/procs não
+	consideram o return. Em contrapartida, lambdas são mais próximos a métodos e
+	funções e retornam apenas ao contexto a que pertencem;
+
+• Closures é uma característica de funções que podem ser associadas a variáveis 
+e podem ser invocadas a qualquer momento. Quando funções com essa característica 
+são criadas, elas carregam em si não apenas o código a ser executado mas também 
+referências à todas as variáveis existentes naquele escopo. Em Ruby, lambdas e procs 
+são closures, portanto carregam em si referências às variáveis em seu escopo;
+
+• Há situações que não é possível saber que momento e nem em que ordem
+que lambdas e procs são executados pois são propagados à outras partes do
+código. Dessa forma, compartilhar variáveis via closures pode resultar em
+comportamento difícil de prever e bugs bem complicados de serem encon-
+trados. Por isso, preste bastante atenção nas variáveis sendo compartilhadas
+via closures.
+
+
+
+
+
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
