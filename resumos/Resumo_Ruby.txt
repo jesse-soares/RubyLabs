@@ -206,6 +206,40 @@ comportamento difícil de prever e bugs bem complicados de serem encon-
 trados. Por isso, preste bastante atenção nas variáveis sendo compartilhadas
 via closures.
 
+• Classes e módulos
+
+	• O Ruby implementa no método de classe .new (ou seja, método relacionado 
+diretamente à classe e não ao objeto) as mágicas internas necessárias para se criar 
+um novo objeto e, em seguida, repassa tudo que recebeu para o método #initialize e 
+retorna a nova instância do objeto (independente do último valor);
+
+	• Uma class macro é uma chamada de método no nível de classe e o resul-
+tado dessa chamada é a alteração da classe, adicionando comportamento
+e tornando algum comportamento mais conveniente ao programador. Por
+exemplo, a macro attr_accessor gera métodos de leitura e escrita para um
+certo atributo;
+
+	• É possível porém ter apenas o método de leitura via a macro attr_reader e o método de escrita
+via attr_writer;
+
+	• O Ruby simplesmente interpreta a associação como a criação de uma variável local, ao invés 
+de procurar uma chamada de método de escrita. Portanto, é imprescindível que, quando usarmos acessors 
+de escrita sejam acompanhados de self;
+
+	• Diferente de muitas linguagens em que private ou public é prefixado à declaração de todos os 
+métodos, no Ruby funciona como uma chave que começa ligada no public. Quando você então escreve 
+private, a chave é virada e todos os métodos então declarados são privados. Você pode voltar a 
+chave para público chamando public.
+	• Métodos privados também são acessíveis de classes filhas. Isso pode ser uma 
+surpresa para você leitor, pois este comportamento não é comum. Dessa forma, não
+é necessário usar protected para que classes filhas tenham acesso a esses métodos.
+Fique atento a isso!
+
+
+
+
+
+
 
 
 
