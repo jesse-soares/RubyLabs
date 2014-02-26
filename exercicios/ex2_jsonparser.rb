@@ -24,11 +24,7 @@ SAIDA
 
 class Pessoa
 
-	attr_accessor :nome
-	attr_accessor :idade
-	attr_accessor :aposentado
-	attr_accessor :filhos
-
+	attr_accessor :nome, :idade, :aposentado, :filhos
 end
 
 
