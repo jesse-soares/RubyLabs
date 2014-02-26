@@ -38,39 +38,52 @@ def toJson obj
 	if obj.kind_of?(Array)
 		obj.each do | value |
 
-			json += ", \n" if json.length > 0
+			json += ", " if json.length > 0
 
 			if value.kind_of?(NilClass)
 				json += "null"
-			else	
-				json += "'" + value + "'"
+			elsif value.kind_of?(Fixnum) || value.kind_of?(Bignum)
+				json += value.to_s
+			elsif value.kind_of?(String)
+				json += '"' + value + '"'						
+			else				
+				json += toJson value
 			end
 		end
 	end
 
 	obj.instance_variables.each do | key |
 		
-		prefixoJson = key.delete "@"
+		prefixoJson = key.to_s.delete "@"
 
 		json += ", \n" if json.length > 0
 
-		if obj.instance_variable_get(key).kind_of?(Array)
+		if obj.instance_variable_get(key).kind_of?(NilClass)
+			json += '"' + prefixoJson + '" : null'  
+		elsif obj.instance_variable_get(key).kind_of?(Array)
 			array = toJson obj.instance_variable_get(key)
-			json += prefixoJson + " : " +  array.to_s
+			json += '"' + prefixoJson + '" : ' +  array.to_s
 		elsif obj.instance_variable_get(key).kind_of?(String)
-			json += prefixoJson + " : '" +  obj.instance_variable_get(key) + "'"
-		else
-			json += prefixoJson + " : " +  obj.instance_variable_get(key).to_s
+			json += '"' + prefixoJson + '" : "' +  obj.instance_variable_get(key) + '"'
+		elsif obj.instance_variable_get(key).kind_of?(Fixnum) || obj.instance_variable_get(key).kind_of?(Bignum)
+			json += '"' + prefixoJson + '" : ' +  obj.instance_variable_get(key).to_s		
+		else			
+			json += '"' + prefixoJson + '" : ' + toJson(obj.instance_variable_get(key))
 		end	
 	end	
 
 	if obj.kind_of?(Array)
-		"[\n" + json + "\n]" 
+		"[" + json + "]" 
 	else	
 		"{\n" + json + "\n}" 	
 	end	
 end	
 
-pessoa = Pessoa.new "Joao", 80, [ "Maria", "Pedro" ]
+pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 80 ]
+pessoa2 = Pessoa.new "Joaozinho", 20, []
 
-puts toJson pessoa
+pessoas = []
+pessoas.push(pessoa1)
+pessoas.push(pessoa2)
+
+puts toJson pessoas
