@@ -5,7 +5,7 @@ Criar um método que receba um objeto em ruby e retorne seu valor em 1 string no
 Ex.: 
 
 ENTRADA
-pessoa = Pessoa
+pessoa = Pessoa.new
 pessoa.nome = "Joao"
 pessoa.idade = 80
 pessoa.filhos = [ "Maria", "Pedro" ]
