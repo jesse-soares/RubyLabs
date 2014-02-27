@@ -13,3 +13,23 @@ Criar 3 métodos na classe Array:
 	Ex: [1, 'a', Pessoa.new, "4.4"].to_num!						# saida: [1, 4.4]
 
 =end
+
+class Array
+
+	def each_num &bloco
+		i = 0
+
+		while i < self.size
+			
+			if self[i].kind_of? Numeric 
+				bloco.call(self[i])
+			elsif self[i].kind_of?(String) && self[i].to_f > 0.0
+				bloco.call(self[i].to_f)			
+			end
+
+			i += 1
+		end	
+	end
+end
+
+[1, 'a', "4.4", "0.0", ["5"]].each_num { |n| puts n }

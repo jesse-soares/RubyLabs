@@ -235,6 +235,60 @@ surpresa para você leitor, pois este comportamento não é comum. Dessa forma, 
 é necessário usar protected para que classes filhas tenham acesso a esses métodos.
 Fique atento a isso!
 
+• Módulos
+	• Não podemos criar uma instância de um módulo e usamos a palavra chave module, ao invés de 'class'.
+Outra diferença é que não existe hierarquia de módulos;
+	• Quando um sistema se torna grande, é importante agrupar diversas classes que
+fazem parte de um componente em um namespace;
+
+• Módulos como mixins
+	• É possível “misturar” esses métodos em qualquer classe ou objeto. Dessa forma, é possível fazer
+diversas classes obterem um conjunto de comportamento comum com apenas uma linha de código;
+	• Dois exemplos básicos de mixins em Ruby são os módulos Comparable e Enumerable;
+
+• Mixins com extend
+	• A diferença é que os métodos são incluídos a nível de classe, e não mais de instância;
+	• O código abiaxo usa um pouco do que chamamos em Ruby de metaprogramação, ou seja, 
+programação para gerar código;
+
+	module Builder
+		def build(attributes={})
+		
+			new_object = new
+			
+			attributes.each do |name, value|
+				# O código abaixo é o mesmo que
+				# new_object.name = value
+				new_object.send "#{name}=", value
+			end
+
+			new_object
+		end
+	end
+		
+	class ShippingPrice
+		extend Builder
+		
+		attr_accessor :width, :height, :depth
+	end
+		
+	shipping = ShippingPrice.build({
+		:width => 0.8,
+		:height => 0.2,
+		:depth => 0.3
+	})
+		
+	shipping.width # 0.8
+
+
+
+
+
+
+
+
+
+
 
 
 
