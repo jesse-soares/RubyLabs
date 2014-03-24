@@ -283,6 +283,22 @@ programação para gerar código;
 
 
 
+	-------------------------BLOCOS--------------------------------------
+
+	• Um bloco serve para armazenar quantas linhas de código quisermos, para ser executado em um certo momento e com seu próprio escopo. Portanto blocos são closures (fechamentos), pois eles estão fechados no ambiente em torno deles. Blocos também são chamados de nameless functions (funções sem nome).
+
+	• Por definição blocos só são usados com métodos.
+
+	• Então temos 3 formas de criar um Proc, com lambda, com proc (mesmo resultado que lambda) e com Proc.new … a diferença é que lambda e proc fazem checagem de parâmetro enquanto Proc.new não.
+
+	• O método yield espera um bloco, e no momento em que yield for chamado ele irá executar o bloco disponível.
+
+	• Com lambda, return apenas retorna alguma informação do lambda. Com proc(), o return retorna do escopo onde a proc foi definida.
+
+	• Se você tentar executar o primeiro código (com proc) verá que a saída é uma linha vazia, pois o parâmetro “msg” não foi passado. Assim, podemos ver que procs automaticamente atribuem “nil” para variáves cujo valor não tenha sido definido. Já o segundo código (com lambda) lançará uma exceção “ArgumentError: wrong number of arguments (0 for 1)”! Ou seja, os argumentos são necessários para a execução de um lambda. 
+
+
+
 
 
 
