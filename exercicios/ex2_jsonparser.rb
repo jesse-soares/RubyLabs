@@ -24,10 +24,12 @@ SAIDA
 
 class Pessoa
 
-	def initialize nome, idade, filhos
+	def initialize nome, idade, filhos, pai
 		@nome = nome
 		@idade = idade
 		@filhos = filhos
+		@pai = pai
+		@orfao = !pai
 	end
 end	
 
@@ -36,6 +38,8 @@ def toJson obj
 	json = "" 
 
 	if obj.kind_of?(Array)
+
+
 		obj.each do | value |
 
 			json += ", " if json.length > 0
@@ -77,13 +81,20 @@ def toJson obj
 	else	
 		"{\n" + json + "\n}" 	
 	end	
-end	
+end
 
-pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 80 ]
-pessoa2 = Pessoa.new "Joaozinho", 20, []
+
+
+
+pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 80 ], nil
+pessoa2 = Pessoa.new "Joaozinho", 20, [], pessoa1
 
 pessoas = []
 pessoas.push(pessoa1)
 pessoas.push(pessoa2)
 
-puts toJson pessoas
+puts pessoas.toJson
+
+puts toJson 1
+puts toJson true
+puts toJson nil
