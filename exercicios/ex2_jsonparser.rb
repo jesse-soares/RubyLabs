@@ -29,72 +29,61 @@ class Pessoa
 		@idade = idade
 		@filhos = filhos
 		@pai = pai
-		@orfao = !pai
 	end
 end	
 
 def toJson obj
 
-	json = "" 
+	json = ""
 
-	if obj.kind_of?(Array)
-
-
-		obj.each do | value |
-
-			json += ", " if json.length > 0
-
-			if value.kind_of?(NilClass)
-				json += "null"
-			elsif value.kind_of?(Fixnum) || value.kind_of?(Bignum)
-				json += value.to_s
-			elsif value.kind_of?(String)
-				json += '"' + value + '"'						
-			else				
-				json += toJson value
-			end
-		end
-	end
-
-	obj.instance_variables.each do | key |
-		
-		prefixoJson = key.to_s.delete "@"
-
-		json += ", \n" if json.length > 0
-
-		if obj.instance_variable_get(key).kind_of?(NilClass)
-			json += '"' + prefixoJson + '" : null'  
-		elsif obj.instance_variable_get(key).kind_of?(Array)
-			array = toJson obj.instance_variable_get(key)
-			json += '"' + prefixoJson + '" : ' +  array.to_s
-		elsif obj.instance_variable_get(key).kind_of?(String)
-			json += '"' + prefixoJson + '" : "' +  obj.instance_variable_get(key) + '"'
-		elsif obj.instance_variable_get(key).kind_of?(Fixnum) || obj.instance_variable_get(key).kind_of?(Bignum)
-			json += '"' + prefixoJson + '" : ' +  obj.instance_variable_get(key).to_s		
-		else			
-			json += '"' + prefixoJson + '" : ' + toJson(obj.instance_variable_get(key))
-		end	
+	if obj.kind_of? NilClass
+		json += "null" 
+	elsif obj.kind_of? String
+		json += '"' + obj + '"'
+	elsif ((obj.kind_of? Numeric) || (obj.kind_of? TrueClass) || (obj.kind_of? FalseClass))
+		json += obj.to_s 
+	elsif obj.kind_of? Array
+		json += toArray obj
+	else
+		json += toObj obj
 	end	
 
-	if obj.kind_of?(Array)
-		"[" + json + "]" 
-	else	
-		"{\n" + json + "\n}" 	
-	end	
+	return json
 end
 
+def toArray obj
+
+	json = ""
+
+	json = obj.each { | value | toJson(value) }
+
+	return "[" + json.join(",") + "]"
+
+end	
+
+def toObj obj
+
+	json = ""
+
+	json = obj.instance_variables.each do | value |
+
+		prefixoJson =  value.to_s.delete "@" 
+
+		'"' + prefixoJson + '" :' + toJson(obj.instance_variable_get(value))
+
+	end
+
+	return "{" + json.join(",") + "}"
+
+end	
 
 
 
-pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 80 ], nil
+pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 90 ], nil
 pessoa2 = Pessoa.new "Joaozinho", 20, [], pessoa1
 
 pessoas = []
-pessoas.push(pessoa1)
-pessoas.push(pessoa2)
+pessoas.push pessoa1 
+pessoas.push pessoa2 
 
-puts pessoas.toJson
-
-puts toJson 1
-puts toJson true
-puts toJson nil
+puts toJson pessoa1
