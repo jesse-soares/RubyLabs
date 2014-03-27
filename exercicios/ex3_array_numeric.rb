@@ -30,6 +30,39 @@ class Array
 			i += 1
 		end	
 	end
+
+	def to_num
+
+		new_array = []
+
+		self.each do  |x| 
+
+			if x.kind_of? Numeric
+				new_array.push x 
+			elsif (x.respond_to? 'to_f') && (x.to_f != 0)
+				new_array.push x.to_f 
+			elsif (x.respond_to? 'to_i') && (x.to_f != 0)
+				new_array.push x.to_i
+			end	
+		end
+
+		new_array
+	end
+
+	def to_num!
+		self.replace to_num
+	end
+
 end
 
 [1, 'a', "4.4", "0.0", ["5"]].each_num { |n| puts n }
+
+arr1 = [1, 'a', Exception.new, "4.4", '1031']
+
+arr1.each_num { |x| puts x }
+
+puts arr1.to_num.inspect
+puts arr1.inspect
+
+puts arr1.to_num!.inspect
+puts arr1.inspect
