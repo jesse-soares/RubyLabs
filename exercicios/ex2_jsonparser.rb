@@ -53,28 +53,29 @@ end
 
 def toArray obj
 
-	json = ""
+	json = obj.map { | value | toJson(value) }
 
-	json = obj.each { | value | toJson(value) }
-
-	return "[" + json.join(",") + "]"
+	return "[ " + json.join(", ") + " ]"
 
 end	
 
 def toObj obj
 
-	json = ""
+	json = obj.instance_variables.map do | value | 
 
-	json = obj.instance_variables.each do | value |
+		prefixoJson =  value.to_s.delete "@"
 
-		prefixoJson =  value.to_s.delete "@" 
+		'"' + prefixoJson + '": ' + toJson(obj.instance_variable_get(value))
 
-		'"' + prefixoJson + '" :' + toJson(obj.instance_variable_get(value))
+	end	
 
-	end
+	return "{ " + json.join(", ") + " }"
 
-	return "{" + json.join(",") + "}"
+end	
 
+def toVariables key, instance_variables
+
+	
 end	
 
 
@@ -86,4 +87,4 @@ pessoas = []
 pessoas.push pessoa1 
 pessoas.push pessoa2 
 
-puts toJson pessoa1
+puts toJson pessoas
