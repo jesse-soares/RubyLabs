@@ -24,6 +24,8 @@ SAIDA
 
 class Pessoa
 
+	attr_accessor :nome, :idade, :filhos, pai
+
 	def initialize nome, idade, filhos, pai
 		@nome = nome
 		@idade = idade
@@ -32,59 +34,61 @@ class Pessoa
 	end
 end	
 
-def toJson obj
+class Object
 
-	json = ""
+	def toJson 
 
-	if obj.kind_of? NilClass
-		json += "null" 
-	elsif obj.kind_of? String
-		json += '"' + obj + '"'
-	elsif ((obj.kind_of? Numeric) || (obj.kind_of? TrueClass) || (obj.kind_of? FalseClass))
-		json += obj.to_s 
-	elsif obj.kind_of? Array
-		json += toArray obj
-	else
-		json += toObj obj
-	end	
+		return "null"  if self.kind_of? NilClass
 
-	return json
-end
+		return '"' + self + '"' if self.kind_of? String
+			
+		return self.to_s  if ((self.kind_of? Numeric) || (self.kind_of? TrueClass) || (self.kind_of? FalseClass))
+			
+		return toArray if self.kind_of? Array
+			
+		toObj
+	end
 
-def toArray obj
+	private
 
-	json = obj.map { | value | toJson(value) }
+	def toArray 
 
-	return "[ " + json.join(", ") + " ]"
+		json = self.map { | value | value.toJson}
 
-end	
-
-def toObj obj
-
-	json = obj.instance_variables.map do | value | 
-
-		prefixoJson =  value.to_s.delete "@"
-
-		'"' + prefixoJson + '": ' + toJson(obj.instance_variable_get(value))
+		"[ " + json.join(", ") + " ]"
 
 	end	
 
-	return "{ " + json.join(", ") + " }"
+	def toObj 
+
+		json = self.instance_variables.map do | value | 
+
+			prefixoJson =  value.to_s.delete "@"
+
+			'"' + prefixoJson + '": ' + (self.instance_variable_get(value)).toJson
+
+		end	
+
+		"{ " + json.join(", ") + " }"
+	end	
 
 end	
-
-def toVariables key, instance_variables
-
-	
-end	
-
-
 
 pessoa1 = Pessoa.new "Joao", 80, [ "Maria", "Pedro", 90 ], nil
 pessoa2 = Pessoa.new "Joaozinho", 20, [], pessoa1
+
+pessoa1.nome = "Kadu"
 
 pessoas = []
 pessoas.push pessoa1 
 pessoas.push pessoa2 
 
-puts toJson pessoas
+puts pessoas.toJson
+
+puts "nome".toJson 
+
+puts nil.toJson 
+
+puts true.toJson 
+
+puts 90.toJson 

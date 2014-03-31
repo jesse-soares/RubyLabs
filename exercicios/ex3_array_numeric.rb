@@ -55,14 +55,14 @@ class Array
 
 end
 
-[1, 'a', "4.4", "0.0", ["5"]].each_num { |n| puts n }
+#[1, 'a', "4.4", "0.0", ["5"]].each_num { |n| puts n }
 
 arr1 = [1, 'a', Exception.new, "4.4", '1031']
 
 arr1.each_num { |x| puts x }
 
-puts arr1.to_num.inspect
-puts arr1.inspect
+#puts arr1.to_num.inspect
 
 puts arr1.to_num!.inspect
+
 puts arr1.inspect
