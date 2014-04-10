@@ -10,4 +10,8 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
     end
   end
+
+  def up
+    add_index :users, :email, :unique => true
+  end  
 end
