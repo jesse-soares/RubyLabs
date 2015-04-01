@@ -1,6 +1,9 @@
 puts "Hello World"   
 puts 'Hello World'   # mais eficiente, pois nao faz varredura em busca de interpolacao nem de caracteres de escape
 
+time = 'São Paulo'
+puts "O melhor time do mundo é o #{time}!!!"
+
 cor = 'azul'
 puts "Minha cor preferida é #{cor}"  # aspa dupla permite a interpolação de variáveis
 
@@ -9,7 +12,6 @@ puts "O resultado de 10 * 5 é #{10 * 5}"  # a interpolacao na verdade permite e
 puts 'I like' + 'Ruby' # concatenar
 puts 'It\'s my Ruby'   # '\' para escapar caracteres
 puts 'Hello ' * 3      # escreve 3 vezes
-
 
 # Alguns métodos úteis
 puts '123456'.length
@@ -22,7 +24,7 @@ puts 'AbAcAxI'.downcase
 puts 'bacana'.reverse
 
 a = 'hello '
-a<<'wold.
+a<<'world.
 I love this world..'  # append
 
 puts a
@@ -66,7 +68,10 @@ end
 
 puts %w{ abobrinha couve alface tomate }	# atalho. mesmo que: ['abobrinha', 'couve', 'alface', 'tomate']
 
+array_teste = %w{teste legais de serem feitos para se conhecer uma linguagem}
 
+puts array_teste[0]
+puts array_teste.to_s
 ### NOTES
 
 # String é uma sequência de caracteres
