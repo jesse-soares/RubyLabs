@@ -32,7 +32,7 @@ class Object
 
 	def to_json
 
-		return "null" if self.nil?
+		return '"' + "null" + '"' if self.nil?
 
 		return self if self.is_primitive?
 
@@ -41,8 +41,9 @@ class Object
 		return self.array_to_json if self.is_a? Array
 
 		return self.hash_to_json if self.is_a? Hash
-	end
 
+		return object_to_json
+	end
 
 	def object_to_json	
 
@@ -50,12 +51,14 @@ class Object
 
 		self.instance_variables.map do |var|
 
-			properties
+			property_name = '"'+ var.to_s.gsub!(/@/, '') + '"'
 
-			[var, self.instance_variable_get(var)].join(":")
+			property_value = self.instance_variable_get(var)
+
+			properties << [property_name, property_value.to_json].join(":")
 		end
 
-		return properties.join(', ')
+		return '{ ' + properties.join(', ') + ' }'
 	end
 
 	def array_to_json
@@ -67,16 +70,48 @@ class Object
 		return '[' + json_array.join(', ') + ']'
 	end
 
+	def hash_to_json
+
+		properties = []
+
+		self.each do|key,value|
+
+			property_name = '"' + key + '"'
+			property_value = value.to_json
+
+  			properties << [property_name, property_value].join(":")
+		end
+
+		return '{ ' + properties.join(', ') + ' }'
+	end
 
 end
 
 
 class Pessoa
 
-	@nome = "Eduardo"
-
+	attr_accessor :nome, :idade, :aposentado, :filhos
 end
-	
-b = Pessoa.new
 
-puts [1, 2, 3, 4, "5", "Caraca Muleke"].to_json
+
+filho1 = Pessoa.new
+filho1.nome = "Maria"
+filho1.idade = 40
+
+filho2 = Pessoa.new
+filho2.nome = "Jose"
+filho2.idade = 38
+
+pessoa = Pessoa.new
+pessoa.nome = "Joao"
+pessoa.idade = 80
+pessoa.aposentado = true
+pessoa.filhos = [filho1, filho2]
+
+
+puts "Fino!!".to_json
+puts pessoa.to_json
+puts
+arr = [1, 2, nil, "Oxi", pessoa, {"oplas" => pessoa}]
+puts arr.to_json
+puts arr.to_s
